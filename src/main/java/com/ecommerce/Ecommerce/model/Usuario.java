@@ -1,10 +1,19 @@
 package com.ecommerce.Ecommerce.model;
 
+import java.util.List;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
+
+@Entity
+@Table(name = "ordenes")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +26,34 @@ public class Usuario {
     private String tipo;
     private String password;
 
+    @ManyToOne
+	private Usuario usuario;
+	
+	public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    @OneToMany(mappedBy = "orden")
+	private List<DetalleOrden> detalle;
+
+
+    public List<DetalleOrden> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(List<DetalleOrden> detalle) {
+        this.detalle = detalle;
+    }
+
     public Usuario() {
     }
 
     public Usuario(Integer id, String nombre, String username, String email, String direccion, String telefono,
-                   String tipo, String password) {
+                   String tipo, String password, Usuario usuario, List<DetalleOrden> detalle) {
         super();
         this.id = id;
         this.nombre = nombre;
@@ -31,6 +63,8 @@ public class Usuario {
         this.telefono = telefono;
         this.tipo = tipo;
         this.password = password;
+        this.usuario = usuario;
+        this.detalle = detalle;
     }
 
     public Integer getId() {

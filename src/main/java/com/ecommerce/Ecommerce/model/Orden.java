@@ -1,10 +1,18 @@
 package com.ecommerce.Ecommerce.model;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name = "ordenes")
 public class Orden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +22,41 @@ public class Orden {
     private Date fechaRecibida;
 
     private double total;
+
+    @ManyToOne
+	private Usuario usuario;
+	
+    @OneToMany(mappedBy = "orden")
+	private List<DetalleOrden> detalle;
+
+
+    public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total, Usuario usuario,
+            List<DetalleOrden> detalle) {
+        this.id = id;
+        this.numero = numero;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaRecibida = fechaRecibida;
+        this.total = total;
+        this.usuario = usuario;
+        this.detalle = detalle;
+    }
+
+
+    public List<DetalleOrden> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(List<DetalleOrden> detalle) {
+        this.detalle = detalle;
+    }
+
+	public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public Integer getId() {
         return id;
