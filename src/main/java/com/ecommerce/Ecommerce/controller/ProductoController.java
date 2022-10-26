@@ -14,7 +14,9 @@ import org.slf4j.*;
 @RequestMapping("/productos")
 public class ProductoController {
     
-    private final Logger logger = LoggerFactory.getLogger(ProductoController.class);
+     final org.jboss.logging.Logger logger = LoggerFactory.logger(ProductoController.class);
+
+
 
     @GetMapping("")
     public String show(){
@@ -28,7 +30,7 @@ public class ProductoController {
 
     @PostMapping("/save")
     public String save(Producto producto){
-      //  logger.info("Este es el objeto producto",producto);
+       logger.info("Este es el objeto producto"+producto);
         return "redirect:/productos";
     }
 }
